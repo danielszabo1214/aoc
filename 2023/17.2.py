@@ -16,8 +16,6 @@ for row in range(len(G)):
             if row-i < 0:
                 break
             w += G[row-i][col]
-            if col == row == 0:
-                print("aa", w)
             for new_dir in "LR":
                 if i > 3:
                     N[(row, col, d)].append(((row-i, col, new_dir), w))
@@ -49,15 +47,9 @@ for row in range(len(G)):
                 if i > 3:
                     N[(row, col, d)].append(((row, col+i, new_dir), w))
 
-# print(N[(0, 0, "U")])
-# print(N[(0, 0, "D")])
-# print(N[(0, 0, "L")])
-# print(N[(0, 0, "R")])
-
-# part 1
 q = []
 
-st = (0, 0, "R")
+st = (0, 0, "D")  # or "R" as these are the 2 directions from (0, 0)
 
 dist = {}
 parent = {}
@@ -85,18 +77,3 @@ while q:
                 dist[m] = dist_to_m
                 parent[m] = n
                 hq.heappush(q, (dist_to_m, m))
-
-a = end_node
-while a in parent:
-    b = a
-    a = parent[a]
-    # print(a, b)
-    ar, ac, _ = a
-    br, bc, _ = b
-    rd = abs(ar-br)
-    cd = abs(ac-bc)
-    # print(rd, cd)
-    assert rd * cd == 0
-    print(max(rd, cd))
-# 792 too high
-# 762 too low

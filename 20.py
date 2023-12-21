@@ -44,7 +44,7 @@ class Conjunction(Module):
 
     def receive(self, inp, pulse) -> List[Tuple[bool, str]]:
         self.remember[inp] = pulse
-        all_h = all(map(lambda rem: rem == H, (rem for rem in self.remember.values())))
+        all_h = all(rem == H for rem in self.remember.values())
         return [(self.name, L if all_h else H, out) for out in self.outs]
 
 

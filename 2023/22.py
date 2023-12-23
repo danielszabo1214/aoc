@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 from dataclasses import dataclass
 
 @dataclass
@@ -130,4 +130,24 @@ def part1():
             removable_count += 1
     print(removable_count)
 
+def part2():
+    res = 0
+    for i in range(len(bricks)):
+        q = deque()
+        q.append(i)
+        removed = set([i])
+        while q:
+            n = q.popleft()
+            top_ids = [i for (i, _) in bricks_on_top_of(bricks, bricks[n])]
+            for top_id in top_ids:
+                under = bricks_under(bricks, bricks[top_id])
+                under_ids = set([ii for (ii, _) in under])
+                if under_ids.issubset(removed):
+                    removed.add(top_id)
+                    q.append(top_id)
+        print("i", i, len(removed) - 1)
+        res += len(removed) - 1    
+    print(res)
+
 part1()
+part2()
